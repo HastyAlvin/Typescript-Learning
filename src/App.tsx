@@ -9,6 +9,8 @@ import { Count } from "./Count";
 4. Type cho hook usestate
 5. Intersection với type 
 6. enum type
+7. Union type
+8. Typeof
 */
 
 // type People = {
@@ -23,24 +25,24 @@ import { Count } from "./Count";
 //   degree?: string;
 // };
 
-//Intersection
-
+//interface
 interface IPeople {
   name: string;
   age: number;
   location?: string;
 }
-
+//interface
 interface IRelationship {
   wifeName: String;
   childName: String;
 }
-
+//Intersection
 interface IEmployee extends IPeople, IRelationship {
   jobTitle: string;
   degree: Degree;
+  level: number | string | Degree; //union
 }
-
+//enum
 enum Degree {
   Bachelor,
   Master,
@@ -52,24 +54,59 @@ enum Degree {
 // age: number;
 //  }
 
+//generic type
+type ApiResponse<DataType, MessageType> = {
+  data: DataType;
+  status: "success" | "failure";
+  message?: MessageType;
+};
+
+// type BookResponse = {
+//   data: { id: number; name: string };
+//   status: "success" | "failure";
+// };
+
 function App() {
   const [count, setCount] = useState<number>(0);
   const [people, setPeople] = useState<IPeople>();
+
+  const userResponse: ApiResponse<{ id: number; name: string }, string> = {
+    data: { id: 1, name: "Thang" },
+    status: "success",
+    message: "hello"
+  };
+
+  const bookReponse: ApiResponse<{ id: number; bookname: string }, string> = {
+    data: { id: 1, bookname: "book1" },
+    status: "success",
+    message: "123"
+  };
 
   const employee: IEmployee = {
     name: "Thang",
     age: 22,
     jobTitle: "SE and BA",
-    degree: "Fresher",
+    degree: Degree.Bachelor, //enum
     wifeName: "undefined",
     childName: "undefined",
+    level: Degree.Master, //union
+  };
+  //typeof
+  const employee2: typeof employee = {
+    name: "Thang",
+    age: 22,
+    jobTitle: "SE and BA",
+    degree: Degree.Bachelor,
+    wifeName: "undefined",
+    childName: "undefined",
+    level: Degree.Master,
   };
 
   function total(number1: number, number2: number): string {
     return String(number1 + number2);
   }
 
-  console.log(people, employee);
+  console.log(people, employee, employee2, userResponse, bookReponse);
 
   useEffect(() => {
     setPeople({
