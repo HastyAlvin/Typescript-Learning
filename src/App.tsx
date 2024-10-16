@@ -33,8 +33,8 @@ interface IPeople {
 }
 //interface
 interface IRelationship {
-  wifeName: String;
-  childName: String;
+  wifeName: string;
+  childName: string;
 }
 //Intersection
 interface IEmployee extends IPeople, IRelationship {
