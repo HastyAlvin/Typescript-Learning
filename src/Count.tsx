@@ -7,9 +7,12 @@ import React from "react";
 interface IProps {
   count: number;
   setCount: React.Dispatch<React.SetStateAction<number>>;
+  total: (a: number, b : number) => string;
 }
 
-export const Count = ({ count, setCount }: IProps) => {
+export const Count = ({ count, setCount, total }: IProps) => {
+  console.log(total(11,22));
+ 
   return (
     <div className="card">
       <button onClick={() => setCount((count) => count + 1)}>
